@@ -46,6 +46,8 @@ services:
     environment:
       MYSQL_DATABASE: laravel
       MYSQL_ROOT_PASSWORD: mi_contrasena_aqui
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
@@ -53,7 +55,18 @@ services:
       - ./conf/mysql/my.cnf:/etc/mysql/my.cnf
     networks:
       - app-network
-
+#PHPmyadmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8088:80
+    environment:
+        MYSQL_ROOT_PASSWORD: mi_contrasena_aqui
+        PMA_HOST: db
+    depends_on:
+      - db
+    networks:
+      - app-network      
 #Docker Networks
 networks:
   app-network:
